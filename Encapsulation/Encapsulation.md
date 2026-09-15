@@ -534,11 +534,31 @@ Friendship is not automatically inherited or shared with other friends.
 
 ### Summary and Best Practices
 
-| Principle | Java | C++ |
-| :--- | :--- | :--- |
-| Hide state | Keep fields `private`. | Keep data members `private`. |
-| Expose behavior | Use methods such as `deposit()` and `withdraw()`. | Use public member functions. |
-| Read-only access | Return immutable values or defensive copies. | Mark read-only member functions `const`. |
-| Inheritance | Use `extends`; choose `protected` carefully. | Choose public/protected/private inheritance deliberately. |
-| Simple data | Use a `record` when appropriate. | Use a `struct` for simple public data. |
-| Validation | Validate in constructors and methods. | Validate in constructors and methods. |
+Encapsulation follows the same basic goal in both languages: keep data protected and allow changes only through controlled operations.
+
+#### Common Principles
+
+| Principle | Recommended practice |
+| :--- | :--- |
+| **Hide state** | Keep fields and data members `private`. |
+| **Expose behavior** | Provide methods for valid operations, such as `deposit()` and `withdraw()`. |
+| **Validate changes** | Check values in constructors and methods before changing the object. |
+| **Avoid leaking internals** | Do not return mutable internal data directly. |
+
+#### Java
+
+| Topic | Best practice |
+| :--- | :--- |
+| Read-only data | Use immutable values or defensive copies. |
+| Inheritance | Use `extends` and choose `protected` carefully. |
+| Simple data objects | Use a `record` when the data should be immutable. |
+| Package-level helpers | Use default access for details shared only within a package. |
+
+#### C++
+
+| Topic | Best practice |
+| :--- | :--- |
+| Read-only functions | Mark functions that do not change the object with `const`. |
+| Inheritance | Use public inheritance for a genuine “is-a” relationship. |
+| Simple data objects | Use a `struct` for simple public data. |
+| Internal implementation | Prefer composition or private implementation details when inheritance is not an “is-a” relationship. |
