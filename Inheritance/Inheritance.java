@@ -1,14 +1,27 @@
 import java.util.Scanner;
 
 class Animal {
+    Animal() {
+        System.out.println("Animal constructor called");
+    }
+
     void eat() {
         System.out.println("Animal is eating");
     }
 }
 
 class Dog extends Animal {
+    Dog() {
+        super(); // Calls Animal's default constructor
+        System.out.println("Dog constructor called");
+    }
+
     void bark() {
         System.out.println("Dog is barking");
+    }
+
+    void eat() {
+        System.out.println("Dog is eating");
     }
 }
 
