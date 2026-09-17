@@ -1,0 +1,17 @@
+# Java compiled output
+*.class
+
+# C/C++ compiled output
+*.exe
+*.out
+
+# Common build directories
+bin/
+obj/
+build/
+out/
+
+# IDE/editor files
+.idea/
+.vscode/
+*.code-workspace
