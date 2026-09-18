@@ -1,8 +1,13 @@
 # Polymorphism in Java, C++, and Python
 
-Polymorphism means **one interface, many implementations**.
+## Definition
 
-For example, different classes can provide their own version of `speak()`:
+**Polymorphism** is the ability to use one common operation or interface with
+objects of different types, while each object supplies the behavior appropriate
+to its own type. In other words, the caller depends on *what an object can do*,
+not necessarily on the concrete class that implements it.
+
+The same call can therefore produce different behavior:
 
 ```text
 Animal
@@ -11,7 +16,15 @@ Animal
 └── Cow      -> Moo
 ```
 
-Code can call `speak()` through a common interface while the actual behavior depends on the object.
+Code can call `speak()` through a common interface while the actual behavior
+depends on the object. The interface may be an inherited base-class method, a
+Java interface, a C++ virtual function, or simply the set of operations an
+object supports in Python.
+
+Polymorphism is not the same as inheritance. Inheritance is one way to share an
+interface and implementation; polymorphism is the substitutability and
+dispatch behavior that lets one piece of code work with multiple
+implementations.
 
 ---
 
@@ -21,10 +34,15 @@ Code can call `speak()` through a common interface while the actual behavior dep
 
 The compiler decides which function to call before the program runs.
 
-Common examples:
+Common examples in statically typed languages include:
 
 - Function or method overloading
 - Operator overloading in C++
+
+Python does not provide traditional method overloading by parameter signature.
+Defining a method with the same name again replaces the earlier definition.
+Python code can instead use default or variadic arguments, dispatch explicitly,
+or use tools such as `functools.singledispatch`.
 
 ### Runtime Polymorphism
 
@@ -252,9 +270,19 @@ The function does not need separate code for `Dog`, `Cat`, and `Cow`. Each class
 
 ---
 
-## 4. Python and Duck Typing
+## 4. Python Polymorphism
 
-Python supports runtime polymorphism without requiring a common base class. It focuses on whether an object provides the required method.
+Python is dynamically typed and uses runtime method lookup. A function usually
+does not need to declare a common base class for its argument; it can call the
+operation it needs and let the object provide that operation. This is the
+Python form of **duck typing**:
+
+> If it walks like a duck and quacks like a duck, it can be used where a duck is
+> expected.
+
+The important point is not the object's class name. The object must satisfy the
+behavioral contract required by the caller. If it does not, Python generally
+raises an exception when the operation is attempted.
 
 ```python
 class Dog:
@@ -272,20 +300,95 @@ make_sound(Dog())    # Woof
 make_sound(Robot())  # Beep
 ```
 
-This is called **duck typing**:
+`Dog` and `Robot` are unrelated classes, but both are polymorphic with respect
+to `make_sound()` because both provide the required `speak()` operation.
 
-> If an object behaves like the required type, it can be used.
+### Python inheritance and overriding
 
-The name comes from the idea: “If it walks like a duck and quacks like a duck, treat it as a duck.”
+Python also supports the more familiar inheritance-based form:
+
+```python
+class Animal:
+    def speak(self):
+        return "animal sound"
+
+class Cat(Animal):
+    def speak(self):
+        return "meow"
+
+def describe(animal: Animal):
+    return animal.speak()
+
+print(describe(Cat()))  # meow
+```
+
+Methods defined on Python classes are dynamically dispatched: the implementation
+found on the actual object is used for an ordinary method call. The annotation
+`animal: Animal` documents an expected type for readers and type checkers; it
+does not enforce the type at runtime.
+
+### Structural typing with `Protocol`
+
+When static type checking is useful, `typing.Protocol` describes the required
+operations without requiring classes to inherit from the protocol:
+
+```python
+from typing import Protocol
+
+class Speaker(Protocol):
+    def speak(self) -> str:
+        ...
+
+def describe(speaker: Speaker) -> str:
+    return speaker.speak()
+
+class Robot:
+    def speak(self) -> str:
+        return "beep"
+
+print(describe(Robot()))  # beep
+```
+
+This is **structural subtyping**: a type checker accepts `Robot` because its
+structure matches `Speaker`. `Protocol` annotations are primarily for static
+analysis; Python does not enforce ordinary type annotations at runtime.
+
+### Abstract Base Classes (ABCs)
+
+Use an abstract base class when a hierarchy should explicitly publish a
+contract and may share implementation:
+
+```python
+from abc import ABC, abstractmethod
+
+class Shape(ABC):
+    @abstractmethod
+    def area(self) -> float:
+        ...
+
+class Square(Shape):
+    def __init__(self, side: float):
+        self.side = side
+
+    def area(self) -> float:
+        return self.side * self.side
+
+shape: Shape = Square(3)
+print(shape.area())  # 9
+```
+
+`Shape` cannot be instantiated until its abstract method is implemented.
+ABCs are optional in Python; duck typing does not require inheritance, and an
+ABC can also recognize registered virtual subclasses.
 
 ### Duck Typing vs Java/C++
 
 | Feature | Python | Java/C++ |
 | :--- | :--- | :--- |
-| Main check | Has the required method at runtime | Usually follows declared types |
+| Main check | Has the required operation at runtime; `Protocol` can describe it for static checkers | Usually follows declared types |
 | Common base class required | No | Usually for base-reference polymorphism |
 | Error timing | Often when the missing method is called | More errors found at compile time |
-| Flexibility | High | More explicit and type-safe |
+| Flexibility | High | More explicit compile-time contracts |
 
 Duck typing is flexible, but a typo or missing method may cause a runtime error.
 
@@ -354,5 +457,16 @@ Be able to explain:
 - The purpose of `override` and `@Override`.
 - Why a polymorphic C++ base class needs a virtual destructor.
 - How Java runtime polymorphism works through a superclass reference.
-- What duck typing means in Python.
+- How Python uses runtime dispatch and duck typing.
+- How `Protocol` provides structural typing for static checkers.
+- When an ABC is useful in Python.
 - One advantage and one risk of duck typing.
+
+## References
+
+- [Python Classes — inheritance and overriding](https://docs.python.org/3/tutorial/classes.html)
+- [Python Glossary — duck typing](https://docs.python.org/3/glossary.html#term-duck-typing)
+- [`typing.Protocol` — structural typing](https://docs.python.org/3/library/typing.html#typing.Protocol)
+- [`abc` — Abstract Base Classes](https://docs.python.org/3/library/abc.html)
+- [Java Tutorials — Polymorphism](https://docs.oracle.com/javase/tutorial/java/IandI/polymorphism.html)
+- [cppreference — virtual functions](https://en.cppreference.com/w/cpp/language/virtual)
