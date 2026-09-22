@@ -665,3 +665,19 @@ Be able to explain:
 - Object slicing in C++.
 - Abstract classes versus interfaces.
 - Why composition is often preferred over inheritance.
+
+## Runnable Code
+
+The folder contains one equivalent example for each language:
+
+- [Inheritance.java](./Inheritance.java)
+- [Inheritance.cpp](./Inheritance.cpp)
+- [Inheritance.py](./Inheritance.py)
+
+Run them from this folder:
+
+```powershell
+javac Inheritance.java; java Inheritance
+g++ -std=c++17 -Wall -Wextra -pedantic Inheritance.cpp -o Inheritance.exe; .\Inheritance.exe
+python Inheritance.py
+```

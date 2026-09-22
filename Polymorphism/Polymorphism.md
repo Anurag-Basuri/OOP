@@ -444,3 +444,17 @@ Be able to explain:
 - [`abc` — Abstract Base Classes](https://docs.python.org/3/library/abc.html)
 - [Java Tutorials — Polymorphism](https://docs.oracle.com/javase/tutorial/java/IandI/polymorphism.html)
 - [cppreference — virtual functions](https://en.cppreference.com/w/cpp/language/virtual)
+
+## Runnable Code
+
+- [Polymorphism.java](./Polymorphism.java)
+- [Polymorphism.cpp](./Polymorphism.cpp)
+- [Polymorphism.py](./Polymorphism.py)
+
+Run them from this folder:
+
+```powershell
+javac Polymorphism.java; java Polymorphism
+g++ -std=c++17 -Wall -Wextra -pedantic Polymorphism.cpp -o Polymorphism.exe; .\Polymorphism.exe
+python Polymorphism.py
+```

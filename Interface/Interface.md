@@ -217,3 +217,17 @@ static duck typing.
 - [Oracle: Default Methods](https://docs.oracle.com/javase/tutorial/java/IandI/defaultmethods.html)
 - [cppreference: Abstract class](https://en.cppreference.com/w/cpp/language/abstract_class)
 - [Python: Protocols and structural subtyping](https://typing.python.org/en/latest/reference/protocols.html)
+
+## Runnable Code
+
+- [Interface.java](./Interface.java)
+- [Interface.cpp](./Interface.cpp)
+- [Interface.py](./Interface.py)
+
+Run them from this folder:
+
+```powershell
+javac Interface.java; java Interface
+g++ -std=c++17 -Wall -Wextra -pedantic Interface.cpp -o Interface.exe; .\Interface.exe
+python Interface.py
+```

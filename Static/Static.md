@@ -226,3 +226,17 @@ but Python's class attributes and descriptor behavior are more dynamic.
 - [cppreference: `this` pointer](https://en.cppreference.com/w/cpp/language/this)
 - [Python built-in `staticmethod`](https://docs.python.org/3/library/functions.html#staticmethod)
 - [Python tutorial: Class and instance variables](https://docs.python.org/3/tutorial/classes.html#class-and-instance-variables)
+
+## Runnable Code
+
+- [Static.java](./Static.java)
+- [Static.cpp](./Static.cpp)
+- [Static.py](./Static.py)
+
+Run them from this folder:
+
+```powershell
+javac Static.java; java Static
+g++ -std=c++17 -Wall -Wextra -pedantic Static.cpp -o Static.exe; .\Static.exe
+python Static.py
+```

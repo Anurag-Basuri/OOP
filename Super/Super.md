@@ -178,3 +178,17 @@ Python cooperative multiple inheritance works when every class calls
 - [Oracle: Using the `super` Keyword](https://docs.oracle.com/javase/tutorial/java/IandI/super.html)
 - [cppreference: Derived classes](https://en.cppreference.com/w/cpp/language/derived_class)
 - [Python built-in `super`](https://docs.python.org/3/library/functions.html#super)
+
+## Runnable Code
+
+- [Super.java](./Super.java)
+- [Super.cpp](./Super.cpp)
+- [Super.py](./Super.py)
+
+Run them from this folder:
+
+```powershell
+javac Super.java; java Super
+g++ -std=c++17 -Wall -Wextra -pedantic Super.cpp -o Super.exe; .\Super.exe
+python Super.py
+```

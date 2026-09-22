@@ -608,4 +608,18 @@ Encapsulation follows the same basic goal in both languages: keep data protected
 | Read-only functions | Mark functions that do not change the object with `const`. |
 | Inheritance | Use public inheritance for a genuine “is-a” relationship. |
 | Simple data objects | Use a `struct` for simple public data. |
+
+## Runnable Code
+
+- [Encapsulation.java](./Encapsulation.java)
+- [Encapsulation.cpp](./Encapsulation.cpp)
+- [Encapsulation.py](./Encapsulation.py)
+
+Run them from this folder:
+
+```powershell
+javac Encapsulation.java; java Encapsulation
+g++ -std=c++17 -Wall -Wextra -pedantic Encapsulation.cpp -o Encapsulation.exe; .\Encapsulation.exe
+python Encapsulation.py
+```
 | Internal implementation | Prefer composition or private implementation details when inheritance is not an “is-a” relationship. |

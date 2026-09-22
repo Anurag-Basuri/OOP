@@ -195,3 +195,17 @@ Use an interface or protocol when:
 - [cppreference: Abstract class](https://en.cppreference.com/w/cpp/language/abstract_class)
 - [Python `abc` documentation](https://docs.python.org/3/library/abc.html)
 - [Python `typing.Protocol` documentation](https://docs.python.org/3/library/typing.html#typing.Protocol)
+
+## Runnable Code
+
+- [Abstraction.java](./Abstraction.java)
+- [Abstraction.cpp](./Abstraction.cpp)
+- [Abstraction.py](./Abstraction.py)
+
+Run them from this folder:
+
+```powershell
+javac Abstraction.java; java Abstraction
+g++ -std=c++17 -Wall -Wextra -pedantic Abstraction.cpp -o Abstraction.exe; .\Abstraction.exe
+python Abstraction.py
+```

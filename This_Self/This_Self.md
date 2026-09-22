@@ -160,3 +160,17 @@ accessed. The method definition still explicitly declares its first parameter.
 - [Oracle: The `this` Keyword](https://docs.oracle.com/javase/tutorial/java/javaOO/thiskey.html)
 - [cppreference: `this` pointer](https://en.cppreference.com/w/cpp/language/this)
 - [Python tutorial: Class and instance objects](https://docs.python.org/3/tutorial/classes.html)
+
+## Runnable Code
+
+- [This_Self.java](./This_Self.java)
+- [This_Self.cpp](./This_Self.cpp)
+- [This_Self.py](./This_Self.py)
+
+Run them from this folder:
+
+```powershell
+javac This_Self.java; java This_Self
+g++ -std=c++17 -Wall -Wextra -pedantic This_Self.cpp -o This_Self.exe; .\This_Self.exe
+python This_Self.py
+```
