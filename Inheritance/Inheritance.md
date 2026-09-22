@@ -1,4 +1,4 @@
-# Inheritance in Java and C++
+# Inheritance in Java, C++, and Python
 
 Inheritance allows one class to reuse and extend another class.
 
@@ -61,6 +61,25 @@ public:
 ```
 
 In C++, `public` inheritance means that a `Dog` can be used where an `Animal` is expected. The `virtual` function and `override` keyword enable runtime overriding.
+
+### Python Code
+
+```python
+class Animal:
+    def speak(self) -> None:
+        print("Animal sound")
+
+class Dog(Animal):
+    def speak(self) -> None:
+        print("Bark")
+
+animal: Animal = Dog()
+animal.speak()  # Bark: Python uses runtime method lookup
+```
+
+Python supports inheritance, but it does not require inheritance for
+polymorphism. A class can also be used through duck typing when it provides the
+needed methods.
 
 ---
 
@@ -423,85 +442,31 @@ public:
 
 ## 5. Abstract Classes and Interfaces
 
-### Java Abstract Class
+Inheritance is often used to implement an abstract contract, but the complete
+topic is covered separately:
 
-An abstract class cannot be instantiated. It can contain fields, constructors, implemented methods, and abstract methods.
+- [Abstraction](../Abstraction/Abstraction.md): abstract classes and pure
+  virtual functions.
+- [Interfaces](../Interface/Interface.md): Java interfaces, C++ interface-style
+  classes, Python protocols, and duck typing.
 
-```java
-abstract class Payment {
-    protected final double amount;
+The inheritance-specific rule is simple: an abstract base can still be
+extended, and a concrete child must implement all required abstract operations.
+An interface or abstract base reference can then refer to a child object.
 
-    protected Payment(double amount) {
-        this.amount = amount;
-    }
+Python's inheritance version is concise:
 
-    public abstract void pay();
+```python
+class Animal:
+    def speak(self) -> str:
+        return "animal sound"
 
-    public void printAmount() {
-        System.out.println(amount);
-    }
-}
+class Dog(Animal):
+    def speak(self) -> str:
+        return "woof"
 
-class CardPayment extends Payment {
-    CardPayment(double amount) {
-        super(amount);
-    }
-
-    @Override
-    public void pay() {
-        System.out.println("Paid by card");
-    }
-}
+print(Dog().speak())
 ```
-
-### Java Interface
-
-An interface defines a contract. A class can implement multiple interfaces.
-
-```java
-interface Printable {
-    void print();
-}
-
-class Report implements Printable {
-    @Override
-    public void print() {
-        System.out.println("Printing report");
-    }
-}
-```
-
-Interfaces can also contain `default` and `static` methods. If two interfaces provide conflicting default methods, the implementing class must override the method.
-
-### C++ Abstract Base Class
-
-A C++ class becomes abstract when it has at least one pure virtual function:
-
-```cpp
-#include <iostream>
-using namespace std;
-
-class Payment {
-public:
-    virtual void pay() = 0;
-    virtual ~Payment() = default;
-};
-
-class CardPayment : public Payment {
-public:
-    void pay() override {
-        cout << "Paid by card\n";
-    }
-};
-```
-
-Important comparison:
-
-| Feature | Java | C++ |
-| :--- | :--- | :--- |
-| Abstract type | `abstract class` or interface | Class with a pure virtual function |
-| Multiple type contracts | Multiple interfaces | Multiple inheritance |
-| Base constructor | Abstract classes can have constructors | Abstract classes can have constructors |
 
 ---
 

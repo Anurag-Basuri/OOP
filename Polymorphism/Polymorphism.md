@@ -329,8 +329,8 @@ does not enforce the type at runtime.
 
 ### Structural typing with `Protocol`
 
-When static type checking is useful, `typing.Protocol` describes the required
-operations without requiring classes to inherit from the protocol:
+`typing.Protocol` can describe the required operations for static type
+checkers without requiring classes to inherit from the protocol:
 
 ```python
 from typing import Protocol
@@ -350,36 +350,10 @@ print(describe(Robot()))  # beep
 ```
 
 This is **structural subtyping**: a type checker accepts `Robot` because its
-structure matches `Speaker`. `Protocol` annotations are primarily for static
-analysis; Python does not enforce ordinary type annotations at runtime.
-
-### Abstract Base Classes (ABCs)
-
-Use an abstract base class when a hierarchy should explicitly publish a
-contract and may share implementation:
-
-```python
-from abc import ABC, abstractmethod
-
-class Shape(ABC):
-    @abstractmethod
-    def area(self) -> float:
-        ...
-
-class Square(Shape):
-    def __init__(self, side: float):
-        self.side = side
-
-    def area(self) -> float:
-        return self.side * self.side
-
-shape: Shape = Square(3)
-print(shape.area())  # 9
-```
-
-`Shape` cannot be instantiated until its abstract method is implemented.
-ABCs are optional in Python; duck typing does not require inheritance, and an
-ABC can also recognize registered virtual subclasses.
+structure matches `Speaker`. Protocols are interface tools, so their full
+comparison with ABCs and duck typing is covered in
+[Interfaces](../Interface/Interface.md). Python's `abc` module is covered in
+[Abstraction](../Abstraction/Abstraction.md).
 
 ### Duck Typing vs Java/C++
 

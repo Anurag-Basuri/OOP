@@ -1,6 +1,7 @@
 # Encapsulation & Access Modifiers
 
-This guide explains how Java and C++ hide data and control access to class members.
+This guide explains how Java, C++, and Python keep state with its behavior and
+control access to implementation details.
 
 ---
 
@@ -12,16 +13,17 @@ This guide explains how Java and C++ hide data and control access to class membe
    - [The "Tell, Don't Ask" Principle & Anemic Domain Models](#the-tell-dont-ask-principle--anemic-domain-models)
 2. [Encapsulation in Java](#2-encapsulation-in-java)
 3. [Encapsulation in C++](#3-encapsulation-in-c)
-4. [C++ `struct` vs `class`](#4-c-struct-vs-class)
-5. [Access Modifiers in Java](#5-access-modifiers-in-java)
+4. [Encapsulation in Python](#4-encapsulation-in-python)
+5. [C++ `struct` vs `class`](#5-c-struct-vs-class)
+6. [Access Modifiers in Java](#6-access-modifiers-in-java)
    - [Key Terms: Class, Subclass, and Package](#key-terms-class-subclass-and-package)
    - [The 4 Access Levels](#the-4-access-levels)
    - [`protected` in a Subclass Outside the Package](#protected-in-a-subclass-outside-the-package)
-6. [Access Modifiers in C++](#6-access-modifiers-in-c)
+7. [Access Modifiers in C++](#7-access-modifiers-in-c)
    - [Key Terms: Class, Derived Class, and `friend`](#key-terms-class-derived-class-and-friend)
    - [The 3 Access Levels](#the-3-access-levels)
    - [Inheritance Access: `public`, `protected`, and `private`](#inheritance-access-public-protected-and-private)
-7. [Controlled Exceptions and Summary](#7-controlled-exceptions-and-summary)
+8. [Controlled Exceptions and Summary](#8-controlled-exceptions-and-summary)
 
 ---
 
@@ -261,7 +263,52 @@ Returning a non-const reference to a private member allows outside code to chang
 
 ---
 
-## 4. C++ `struct` vs `class`
+## 4. Encapsulation in Python
+
+Python does not have Java-style `private` enforcement. By convention:
+
+- `name` is public.
+- `_name` means internal or protected-by-convention.
+- `__name` uses name mangling to reduce accidental access; it is not absolute
+  security.
+
+Use methods and properties to validate state transitions:
+
+```python
+class BankAccount:
+    def __init__(self, initial_balance: float = 0.0) -> None:
+        if initial_balance < 0:
+            raise ValueError("Initial balance cannot be negative")
+        self._balance = initial_balance
+
+    @property
+    def balance(self) -> float:
+        return self._balance
+
+    def deposit(self, amount: float) -> None:
+        if amount <= 0:
+            raise ValueError("Deposit must be positive")
+        self._balance += amount
+
+    def withdraw(self, amount: float) -> None:
+        if amount <= 0 or amount > self._balance:
+            raise ValueError("Invalid withdrawal")
+        self._balance -= amount
+
+account = BankAccount(100)
+account.deposit(50)
+account.withdraw(25)
+print(account.balance)  # 125
+# account._balance is accessible, but changing it directly breaks the convention.
+```
+
+Python properties provide a clean public interface while keeping validation in
+the class. For stronger boundaries, use a separate module API, immutable
+objects, or a language with enforced access control.
+
+---
+
+## 5. C++ `struct` vs `class`
 
 A common misconception among beginner and intermediate programmers is that `struct` in C++ is just like a C struct (only holding data without methods or constructors).
 
@@ -328,7 +375,7 @@ public:
 
 ---
 
-## 5. Access Modifiers in Java
+## 6. Access Modifiers in Java
 
 Access modifiers are keywords that control who can use a class member (a field, method, or constructor). They are Java's main tool for protecting internal state.
 
@@ -412,7 +459,7 @@ This restriction stops a subclass in another package from inspecting or changing
 
 ---
 
-## 6. Access Modifiers in C++
+## 7. Access Modifiers in C++
 
 Access specifiers are labels inside a C++ class that control who can use its members. C++ has three access levels and no Java-style package access.
 
@@ -512,7 +559,7 @@ Car car;
 
 ---
 
-## 7. Controlled Exceptions and Summary
+## 8. Controlled Exceptions and Summary
 
 ### C++ `friend` Classes and Functions
 
