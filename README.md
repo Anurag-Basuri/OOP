@@ -8,6 +8,7 @@
 - [`this`, `self`, and the current object](./This_Self/This_Self.md)
 - [`super` and parent-class behavior](./Super/Super.md)
 - [Static members](./Static/Static.md)
+- [MoveInSync SDE interview: Java and OOP](./MoveInSync/MoveInSync.md)
 
 ## How to use these notes
 
